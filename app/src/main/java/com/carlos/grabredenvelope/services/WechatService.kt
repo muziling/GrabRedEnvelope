@@ -222,7 +222,8 @@ class WechatService : BaseAccessibilityService() {
      */
     private fun quitEnvelope(event: AccessibilityEvent) {
         // 如果当前页面不是红包详情页或者没有点开过拆按钮，则不执行退出操作
-        if ((event.className != WECHAT_LUCKYMONEYDETAILUI_ACTIVITY) or (status != HAS_OPENED)) {
+        val regex = Regex(WECHAT_LUCKYMONEYDETAILUI_ACTIVITY)
+        if ((!regex.matches(event.className.toString())) or (status != HAS_OPENED)) {
             return
         }
 

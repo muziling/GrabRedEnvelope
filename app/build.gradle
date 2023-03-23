@@ -33,7 +33,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 33
         versionCode 350
-        versionName "3.5.0"
+        versionName "3.5.1"
         flavorDimensions "350" //和versionCode相同
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。

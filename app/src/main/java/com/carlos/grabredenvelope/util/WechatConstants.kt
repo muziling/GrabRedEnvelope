@@ -45,7 +45,7 @@ object WechatConstants {
     val WECHAT_LUCKYMONEY_ACTIVITY =
         "$WECHAT_PACKAGE.plugin.luckymoney.ui.LuckyMoneyNotHookReceiveUI" //微信红包弹框
     val WECHAT_LUCKYMONEYDETAILUI_ACTIVITY =
-        "$WECHAT_PACKAGE.plugin.luckymoney.ui.LuckyMoneyDetailUI" //微信红包详情页
+        "$WECHAT_PACKAGE.plugin.luckymoney.ui.LuckyMoney.*DetailUI$" //微信红包详情页
 
     var RED_ENVELOPE_TITLE = "[微信红包]" //红包关键字
 
