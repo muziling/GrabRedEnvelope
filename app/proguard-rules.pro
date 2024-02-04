@@ -18,14 +18,14 @@
 
 
 #umeng
--keep class com.umeng.** {*;}
--keepclassmembers class * {
-   public <init> (org.json.JSONObject);
-}
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
+#-keep class com.umeng.** {*;}
+#-keepclassmembers class * {
+#   public <init> (org.json.JSONObject);
+#}
+#-keepclassmembers enum * {
+#    public static **[] values();
+#    public static ** valueOf(java.lang.String);
+#}
 
 # Jpush
 -dontoptimize
@@ -37,10 +37,10 @@
 -keep class cn.jiguang.** { *; }
 
 # sentry
--keepattributes LineNumberTable,SourceFile
--dontwarn org.slf4j.**
--dontwarn javax.**
--keep class io.sentry.event.Event { *; }
+#-keepattributes LineNumberTable,SourceFile
+#-dontwarn org.slf4j.**
+#-dontwarn javax.**
+#-keep class io.sentry.event.Event { *; }
 
 
 # greendao

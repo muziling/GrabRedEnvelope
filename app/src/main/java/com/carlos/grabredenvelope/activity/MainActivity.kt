@@ -8,7 +8,6 @@ import com.carlos.cutils.listener.PermissionListener
 import com.carlos.grabredenvelope.databinding.ActivityMainBinding
 import com.carlos.grabredenvelope.fragment.*
 import com.carlos.grabredenvelope.util.Update
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  *                             _ooOoo_
@@ -78,8 +77,8 @@ open class MainActivity : BaseActivity() {
     private fun initView() {
         val adapter = CBaseMyPagerAdapter(supportFragmentManager, fragments, titles)
         binding.viewPager.adapter = adapter
-        binding.slidingTabs.setupWithViewPager(viewPager)
-        viewPager.offscreenPageLimit = 2
+        binding.slidingTabs.setupWithViewPager(binding.viewPager)
+        binding.viewPager.offscreenPageLimit = 2
     }
 
     private fun addListener() {
@@ -100,7 +99,7 @@ open class MainActivity : BaseActivity() {
     }
 
     fun checkItem(item: Int) {
-        viewPager.currentItem = item
+        binding.viewPager.currentItem = item
     }
 
 }

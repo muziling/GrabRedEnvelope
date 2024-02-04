@@ -2,10 +2,12 @@ package com.carlos.grabredenvelope.fragment
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.carlos.grabredenvelope.R
 import com.carlos.grabredenvelope.activity.MainActivity
-import kotlinx.android.synthetic.main.fragment_about.*
+import com.carlos.grabredenvelope.databinding.FragmentAboutBinding
 
 /**
  *                             _ooOoo_
@@ -44,14 +46,28 @@ import kotlinx.android.synthetic.main.fragment_about.*
  * Created by 小不点 on 2016/2/22.
  */
 class GuideFragment : BaseFragment(R.layout.fragment_about) {
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        b_donate_me.setOnClickListener {
+    private var _binding: FragmentAboutBinding? = null
+    private val binding get() = _binding!!
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAboutBinding.inflate(inflater, container, false)
+        val view = binding.root
+        init(view)
+        return view
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    private fun init(view: View) {
+        binding.bDonateMe.setOnClickListener {
             val mainActivity2 = activity as MainActivity
             mainActivity2.checkItem(4)
         }
-        tv_use.movementMethod = ScrollingMovementMethod.getInstance()
+        binding.tvUse.movementMethod = ScrollingMovementMethod.getInstance()
     }
 
 }

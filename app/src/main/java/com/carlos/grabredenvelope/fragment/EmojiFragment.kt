@@ -3,12 +3,14 @@ package com.carlos.grabredenvelope.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import com.carlos.grabredenvelope.R
 import com.carlos.grabredenvelope.data.RedEnvelopePreferences
-import kotlinx.android.synthetic.main.fragment_emoji.*
+import com.carlos.grabredenvelope.databinding.FragmentEmojiBinding
 
 /**
  *                             _ooOoo_
@@ -46,35 +48,51 @@ import kotlinx.android.synthetic.main.fragment_emoji.*
  * Created by Carlos on 2021/2/8.
  */
 class EmojiFragment : BaseFragment(R.layout.fragment_emoji) {
+    private var _binding: FragmentEmojiBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentEmojiBinding.inflate(inflater, container, false)
+        val view = binding.root
         init()
+        return view
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        init()
+//    }
 
     private fun init() {
-        tv_control.setOnClickListener {
+        binding.tvControl.setOnClickListener {
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
             Toast.makeText(view?.context, "辅助功能找到（自动发送表情）开启或关闭。", Toast.LENGTH_SHORT)
                 .show()
         }
 
-        et_emoji.setText(RedEnvelopePreferences.autoText)
-        et_emoji.doAfterTextChanged {
-            RedEnvelopePreferences.autoText = et_emoji.text.toString()
+        binding.etEmoji.setText(RedEnvelopePreferences.autoText)
+        binding.etEmoji.doAfterTextChanged {
+            RedEnvelopePreferences.autoText = binding.etEmoji.text.toString()
         }
 
-        np_times.minValue = 0
-        np_times.maxValue = 100
-        np_times.value = RedEnvelopePreferences.emojiTimes
-        np_times.setOnValueChangedListener { picker, oldVal, newVal ->
+        binding.npTimes.minValue = 0
+        binding.npTimes.maxValue = 100
+        binding.npTimes.value = RedEnvelopePreferences.emojiTimes
+        binding.npTimes.setOnValueChangedListener { picker, oldVal, newVal ->
             RedEnvelopePreferences.emojiTimes = newVal
         }
 
-        np_interval.minValue = 0
-        np_interval.maxValue = 3000
-        np_interval.value = RedEnvelopePreferences.emojiInterval
-        np_interval.setOnValueChangedListener { picker, oldVal, newVal ->
+        binding.npInterval.minValue = 0
+        binding.npInterval.maxValue = 3000
+        binding.npInterval.value = RedEnvelopePreferences.emojiInterval
+        binding.npInterval.setOnValueChangedListener { picker, oldVal, newVal ->
             RedEnvelopePreferences.emojiInterval = newVal
         }
     }

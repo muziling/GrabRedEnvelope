@@ -12,7 +12,7 @@ import com.carlos.grabredenvelope.MyApplication
 import com.carlos.grabredenvelope.R
 import com.carlos.grabredenvelope.activity.MainActivity
 import com.carlos.grabredenvelope.util.ControlUse
-import io.sentry.Sentry
+//import io.sentry.Sentry
 
 /**
  *                             _ooOoo_
@@ -77,7 +77,7 @@ abstract class BaseAccessibilityService : CBaseAccessibilityService() {
 
     override fun onInterrupt() {
         LogUtils.e("Service onInterrupt.")
-        Sentry.captureMessage("${this.javaClass.name} onInterrupt")
+//        Sentry.captureMessage("${this.javaClass.name} onInterrupt")
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {

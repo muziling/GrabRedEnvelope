@@ -1,16 +1,15 @@
 package com.carlos.grabredenvelope.fragment
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.carlos.cutils.extend.doubleCount
 import com.carlos.cutils.extend.getYearToMinute
-import com.carlos.cutils.util.LogUtils
 import com.carlos.grabredenvelope.R
+import com.carlos.grabredenvelope.databinding.FragmentRecordDingdingBinding
 import com.carlos.grabredenvelope.db.DingDingRedEnvelopeDb
-import kotlinx.android.synthetic.main.fragment_record.*
 import kotlinx.coroutines.*
 
 /**
@@ -50,30 +49,41 @@ import kotlinx.coroutines.*
  * Created by Carlos on 2020/3/2.
  */
 class RecordDingDIngFragment : BaseFragment(R.layout.fragment_record_dingding) {
-
+    private var _binding: FragmentRecordDingdingBinding? = null
+    private val binding get() = _binding!!
     var list = ArrayList<String>()
     lateinit var arrayAdapter: ArrayAdapter<String>
     var startTime = getYearToMinute()
     var total = 0.0
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRecordDingdingBinding.inflate(inflater, container, false)
+        val view = binding.root
         init(view)
         initData()
+        return view
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun init(view: View) {
         arrayAdapter = ArrayAdapter(
             view.context, R.layout.item_wechat_record, R.id.tv_item_wechat_record, list
         )
-        lv_wechat_record.adapter = arrayAdapter
+        binding.lvWechatRecord.adapter = arrayAdapter
     }
 
     private fun initData() {
         job = GlobalScope.launch(Dispatchers.Main) {
             getData()
             if (list.isNullOrEmpty()) return@launch
-            tv_record_title.text = "从${startTime}至今已助你抢到${total}元"
+            binding.tvRecordTitle.text = "从${startTime}至今已助你抢到${total}元"
             arrayAdapter.notifyDataSetChanged()
         }
     }

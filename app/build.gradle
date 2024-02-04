@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'org.greenrobot.greendao' // apply plugin
+//apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'kotlinx-serialization'
 
-apply plugin: 'io.sentry.android.gradle'
+//apply plugin: 'io.sentry.android.gradle'
 apply plugin: 'org.greenrobot.greendao'
 
 def defaultPropertiesFile = rootProject.file("buildsystem/default.properties")
@@ -26,7 +26,7 @@ android {
             storePassword defaultProperties['storePassword']
         }
     }
-    compileSdkVersion 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.carlos.grabredenvelope"
@@ -47,7 +47,7 @@ android {
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs 'zh'
+        resourceConfigurations += ['zh']
         multiDexEnabled true
     }
     buildTypes {
@@ -63,31 +63,36 @@ android {
         }
     }
 
-
-    //多渠道打包
-    productFlavors {
-        dev {          //开发测试版本
-            buildConfigField("String", "UMENG_APPKEY_DEV", "\"${defaultProperties['UMENG_APPKEY_DEV']}\"")
-            buildConfigField("String", "SENTRY_DSN", "\"${defaultProperties['SENTRY_DSN_DEV']}\"")
-
-        }
-        production {   //正式发布版本
-            buildConfigField("String", "UMENG_APPKEY", "\"${defaultProperties['UMENG_APPKEY']}\"")
-            buildConfigField("String", "SENTRY_DSN", "\"${defaultProperties['SENTRY_DSN']}\"")
-        }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+    //多渠道打包
+//    productFlavors {
+//        dev {          //开发测试版本
+//            buildConfigField("String", "UMENG_APPKEY_DEV", "\"${defaultProperties['UMENG_APPKEY_DEV']}\"")
+//            buildConfigField("String", "SENTRY_DSN", "\"${defaultProperties['SENTRY_DSN_DEV']}\"")
+//
+//        }
+//        production {   //正式发布版本
+//            buildConfigField("String", "UMENG_APPKEY", "\"${defaultProperties['UMENG_APPKEY']}\"")
+//            buildConfigField("String", "SENTRY_DSN", "\"${defaultProperties['SENTRY_DSN']}\"")
+//        }
+//    }
+
     buildFeatures {
-        viewBinding {
-            enabled = true
-        }
+        viewBinding = true
     }
     namespace 'com.carlos.grabredenvelope'
 
 }
 
 
-configurations.all {
+configurations.configureEach {
 
     /**
      * 用于控制SNAPSHOT版本下载刷新频率，默认每隔24小时，gradle会检查一次依赖
@@ -99,17 +104,17 @@ configurations.all {
 }
 
 //修改APK名字
-android.applicationVariants.all { variant ->
-    variant.outputs.all {
+android.applicationVariants.configureEach { variant ->
+    variant.outputs.configureEach {
         outputFileName = "GrabRedEnvelope${versionName}.apk"
     }
 }
 
-sentry {
-    tracingInstrumentation {
-        enabled = true
-    }
-}
+//sentry {
+//    tracingInstrumentation {
+//        enabled = true
+//    }
+//}
 
 greendao {
     schemaVersion 2//数据库版本号
@@ -119,13 +124,18 @@ greendao {
     //generateTests：设置自动生成单元测试用例
 }
 
+project.afterEvaluate {
+    getTasksByName("compileDebugKotlin", false).forEach {
+        it.mustRunAfter("greendao")
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2'
 
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
@@ -137,14 +147,14 @@ dependencies {
     implementation 'cn.jiguang.sdk:jpush:4.8.5'
 
     //umeng
-    implementation 'com.umeng.umsdk:common:9.5.0'// 必选
-    implementation 'com.umeng.umsdk:asms:1.4.1'// 必选
-    implementation 'com.umeng.umsdk:apm:1.7.0' // 错误分析模块改为独立库，看crash和性能数据请一定集成
+//    implementation 'com.umeng.umsdk:common:9.5.0'// 必选
+//    implementation 'com.umeng.umsdk:asms:1.4.1'// 必选
+//    implementation 'com.umeng.umsdk:apm:1.7.0' // 错误分析模块改为独立库，看crash和性能数据请一定集成
 
-    implementation 'io.sentry:sentry-android:6.10.0'
-    implementation 'com.google.android.material:material:1.5.0'
+//    implementation 'io.sentry:sentry-android:6.10.0'
+    implementation 'com.google.android.material:material:1.11.0'
 
-    implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation 'org.greenrobot:greendao:3.3.0' // add library
 
     implementation 'androidx.multidex:multidex:2.0.1'
 

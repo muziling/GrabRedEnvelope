@@ -4,13 +4,15 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.carlos.cutils.thirdparty.AlipayReward
 import com.carlos.cutils.thirdparty.WechatReward
 import com.carlos.cutils.util.ToastUtil
 import com.carlos.grabredenvelope.R
+import com.carlos.grabredenvelope.databinding.FragmentRewardBinding
 import com.carlos.grabredenvelope.util.BitmapUtils
-import kotlinx.android.synthetic.main.fragment_reward.*
 import java.io.File
 
 /**
@@ -50,15 +52,30 @@ import java.io.File
  * Created by Carlos on 2019/2/23.
  */
 class RewardFragment : BaseFragment(R.layout.fragment_reward) {
+    private var _binding: FragmentRewardBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        b_alipay_reward.setOnClickListener { AlipayReward(view.context) }
-        b_alipay_reward.setOnClickListener { AlipayReward(view.context) }
-        b_wechat_reward.setOnClickListener {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRewardBinding.inflate(inflater, container, false)
+        val view = binding.root
+        init(view)
+        return view
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    private fun init(view: View) {
+        binding.bAlipayReward.setOnClickListener { AlipayReward(view.context) }
+        binding.bAlipayReward.setOnClickListener { AlipayReward(view.context) }
+        binding.bWechatReward.setOnClickListener {
             WechatReward(view.context)
         }
-        iv_alipay.setOnLongClickListener {
+        binding.ivAlipay.setOnLongClickListener {
             val filedir = filedir
             val output = File(filedir, "xbd_alipay.jpg")
             if (!output.exists()) {
@@ -69,7 +86,7 @@ class RewardFragment : BaseFragment(R.layout.fragment_reward) {
                 .build()
             true
         }
-        iv_wechat.setOnLongClickListener {
+        binding.ivWechat.setOnLongClickListener {
             val filedir = filedir
             val output = File(filedir, "xbd_wechat.jpg")
             if (!output.exists()) {
@@ -81,7 +98,6 @@ class RewardFragment : BaseFragment(R.layout.fragment_reward) {
             true
         }
     }
-
     /**
      * 得到安装路径
      * @return

@@ -1,6 +1,5 @@
 package com.carlos.grabredenvelope
 
-import android.app.Application
 import androidx.multidex.MultiDexApplication
 import com.carlos.cutils.CUtils
 import com.carlos.cutils.util.LogUtils
@@ -52,7 +51,7 @@ class MyApplication : MultiDexApplication() {
 
         CUtils.init(this)
 
-        AppInit()
+        //AppInit()
 
     }
 
