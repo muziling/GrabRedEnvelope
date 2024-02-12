@@ -11,7 +11,7 @@ import com.carlos.cutils.util.LogUtils
 import com.carlos.grabredenvelope.MyApplication
 import com.carlos.grabredenvelope.R
 import com.carlos.grabredenvelope.activity.MainActivity
-import com.carlos.grabredenvelope.util.ControlUse
+//import com.carlos.grabredenvelope.util.ControlUse
 //import io.sentry.Sentry
 
 /**
@@ -51,7 +51,7 @@ import com.carlos.grabredenvelope.util.ControlUse
  */
 abstract class BaseAccessibilityService : CBaseAccessibilityService() {
 
-    private lateinit var controlUse: ControlUse
+//    private lateinit var controlUse: ControlUse
     open var notificationTitle: String = ""
 
     /* 状态切换，流程更直观，避免人为点击的误操作，等待红包——点击红包关键字——点击红包——拆红包——等待红包循环 */
@@ -66,8 +66,8 @@ abstract class BaseAccessibilityService : CBaseAccessibilityService() {
     override fun onCreate() {
         super.onCreate()
         LogUtils.d("Service onCreate.")
-        controlUse = ControlUse(applicationContext)
-        if (controlUse.stopUse()) isMonitor = false
+//        controlUse = ControlUse(applicationContext)
+//        if (controlUse.stopUse()) isMonitor = false
     }
 
     override fun onDestroy() {

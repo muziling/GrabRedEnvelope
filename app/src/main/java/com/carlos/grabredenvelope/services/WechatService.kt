@@ -1,6 +1,7 @@
 package com.carlos.grabredenvelope.services
 
 import android.graphics.Path
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import com.carlos.cutils.extend.*
 import com.carlos.cutils.util.AppUtils

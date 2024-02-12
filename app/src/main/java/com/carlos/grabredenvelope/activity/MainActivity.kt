@@ -3,11 +3,11 @@ package com.carlos.grabredenvelope.activity
 import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.carlos.cutils.base.activity.CBaseAccessibilityActivity
 import com.carlos.cutils.base.adapter.CBaseMyPagerAdapter
 import com.carlos.cutils.listener.PermissionListener
 import com.carlos.grabredenvelope.databinding.ActivityMainBinding
 import com.carlos.grabredenvelope.fragment.*
-import com.carlos.grabredenvelope.util.Update
 
 /**
  *                             _ooOoo_
@@ -45,7 +45,7 @@ import com.carlos.grabredenvelope.util.Update
  * Github: https://github.com/xbdcc/.
  * Created by 小不点 on 2016/2/14.
  */
-open class MainActivity : BaseActivity() {
+open class MainActivity : CBaseAccessibilityActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -54,7 +54,7 @@ open class MainActivity : BaseActivity() {
     var fragments = mutableListOf<Fragment>(ControlFragment(), GuideFragment(), AboutFragment(),
         CodeFragment(), RewardFragment(), RecordFragment(), EmojiFragment()
     )
-    var titles = mutableListOf("控制", "教程", "说明", "源码", "打赏", "微信", "表情")
+    private var titles = mutableListOf("控制", "教程", "说明", "源码", "打赏", "微信", "表情")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +65,7 @@ open class MainActivity : BaseActivity() {
         initView()
 
         getPermissions()
-        checkVersion()
         addListener()
-    }
-
-    private fun checkVersion() {
-        val update = Update(this, 1)
-        update.update()
     }
 
     private fun initView() {

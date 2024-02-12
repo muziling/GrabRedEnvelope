@@ -4,7 +4,6 @@ import com.carlos.cutils.base.CBasePreferences
 import com.carlos.cutils.util.LogUtils
 import com.carlos.grabredenvelope.MyApplication
 import com.carlos.grabredenvelope.dao.WechatControlVO
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

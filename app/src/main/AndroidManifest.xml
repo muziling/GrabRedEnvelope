@@ -54,30 +54,32 @@
 
         <activity android:name="com.carlos.grabredenvelope.receiver.MessageActivity"/>
 
-        <service android:name=".services.JpushService"
-                 android:enabled="true"
-                 android:exported="false"
-                 android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jiguang.user.service.action" />
-            </intent-filter>
-        </service>
+<!--        <service android:name=".services.JpushService"-->
+<!--                 android:enabled="true"-->
+<!--                 android:exported="false"-->
+<!--                 android:process=":pushcore">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="cn.jiguang.user.service.action" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
 
-        <receiver
-            android:name=".receiver.JpushReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver-->
+<!--            android:name=".receiver.JpushReceiver"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false"-->
+<!--            android:process=":pushcore">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />-->
+<!--                <category android:name="${applicationId}" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
 
 <!--        <meta-data-->
 <!--            android:name="io.sentry.auto-init"-->
 <!--            android:value="false" />-->
     </application>
-
+    <queries>
+        <package android:name="com.tencent.mm" />
+    </queries>
 </manifest>
